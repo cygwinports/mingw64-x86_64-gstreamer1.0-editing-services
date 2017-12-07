@@ -1,0 +1,23 @@
+CROSS_HOST="x86_64-w64-mingw32"
+inherit cross gstreamer
+
+NAME="mingw64-x86_64-gstreamer1.0-editing-services"
+VERSION=1.12.3
+RELEASE=1
+CATEGORY="Devel"
+SUMMARY="GStreamer non-linear editor library for Win64 toolchain"
+DESCRIPTION="This is a high-level library for facilitating the creation of
+audio/video non-linear editors with the GStreamer multimedia framework."
+HOMEPAGE="http://gstreamer.freedesktop.org/"
+SRC_URI="http://gstreamer.freedesktop.org/src/gstreamer-editing-services/gstreamer-editing-services-${VERSION}.tar.xz"
+SRC_DIR="gstreamer-editing-services-${VERSION}"
+
+MAKEOPTS+=" dist_bashcompletion_DATA= man_MANS= pyges_PYTHON= "
+
+src_compile() {
+	cd ${S}
+	gstreamer_autoreconf
+	cd ${B}
+	cygconf
+	cygmake
+}
